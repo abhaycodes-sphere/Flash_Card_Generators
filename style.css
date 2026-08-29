@@ -1,10 +1,8 @@
-/* ==========================================================================
-   DESIGN SYSTEM & VARIABLES
-   ========================================================================== */
+
 :root {
     --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     
-    /* Light Theme Palette */
+    
     --bg-main: #f8fafc;
     --bg-surface: #ffffff;
     --bg-subtle: #f1f5f9;
@@ -22,7 +20,7 @@
     
     --accent-glow: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
     
-    /* SRS Colors */
+    
     --again-color: #ef4444;
     --hard-color: #f59e0b;
     --good-color: #3b82f6;
@@ -55,7 +53,7 @@
     --primary-light: rgba(99, 102, 241, 0.15);
 }
 
-/* Base Styles */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -73,9 +71,7 @@ body {
     transition: background-color var(--transition-normal), color var(--transition-normal);
 }
 
-/* ==========================================================================
-   TOP NAVIGATION
-   ========================================================================== */
+
 .navbar {
     background-color: var(--bg-surface);
     border-bottom: 1px solid var(--border-color);
@@ -194,7 +190,7 @@ body {
     color: var(--text-primary);
 }
 
-/* AVATAR CLICKABLE STYLES */
+
 .avatar {
     width: 38px;
     height: 38px;
@@ -226,9 +222,7 @@ body {
     cursor: pointer;
 }
 
-/* ==========================================================================
-   APP CONTAINER & SCREENS
-   ========================================================================== */
+
 .app-container {
     max-width: 1000px;
     margin: 0 auto;
@@ -251,9 +245,7 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* ==========================================================================
-   1. HERO & INPUT OPTIONS
-   ========================================================================== */
+
 .hero-header {
     text-align: center;
     max-width: 680px;
@@ -411,9 +403,7 @@ body {
     margin-top: auto;
 }
 
-/* ==========================================================================
-   3. SETTINGS PANEL
-   ========================================================================== */
+
 .settings-panel {
     background: var(--bg-surface);
     border: 1px solid var(--border-color);
@@ -555,9 +545,7 @@ body {
     width: 100%;
 }
 
-/* ==========================================================================
-   4. GENERATION LOADING STATE
-   ========================================================================== */
+
 .loading-card {
     background: var(--bg-surface);
     border: 1px solid var(--border-color);
@@ -615,9 +603,7 @@ body {
     transition: width 0.3s ease;
 }
 
-/* ==========================================================================
-   5. FLASHCARD STUDY SCREEN & FLIP INTERACTION
-   ========================================================================== */
+
 .study-header {
     display: flex;
     align-items: center;
@@ -845,9 +831,7 @@ kbd {
     font-weight: 700;
 }
 
-/* ==========================================================================
-   7. STUDY COMPLETION SCREEN
-   ========================================================================== */
+
 .completion-card {
     background: var(--bg-surface);
     border: 1px solid var(--border-color);
@@ -908,9 +892,7 @@ kbd {
     justify-content: center;
 }
 
-/* ==========================================================================
-   MY DECKS SCREEN
-   ========================================================================== */
+
 .decks-header {
     margin-bottom: 2rem;
 }
@@ -950,9 +932,7 @@ kbd {
     color: var(--text-muted);
 }
 
-/* ==========================================================================
-   PROFILE & AUTH MODAL
-   ========================================================================== */
+
 .modal-backdrop {
     position: fixed;
     top: 0;

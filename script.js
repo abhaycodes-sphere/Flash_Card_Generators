@@ -1,11 +1,7 @@
-/**
- * FLASHCARD GENERATOR — FRONTEND APPLICATION LOGIC
- */
+
 
 document.addEventListener("DOMContentLoaded", () => {
-    // ==========================================
-    // STATE MANAGEMENT
-    // ==========================================
+    
     const state = {
         theme: localStorage.getItem("theme") || "light",
         user: JSON.parse(localStorage.getItem("flashcard_user") || "null"),
@@ -23,9 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
         savedDecks: JSON.parse(localStorage.getItem("flashcard_decks") || "[]")
     };
 
-    // ==========================================
-    // DOM ELEMENTS
-    // ==========================================
+    
     const screens = {
         create: document.getElementById("createScreen"),
         loading: document.getElementById("loadingScreen"),
@@ -165,9 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (navLinks) navLinks.classList.remove("show");
     }
 
-    // ==========================================
-    // EVENT BINDINGS
-    // ==========================================
+    
     function bindEvents() {
         themeToggleBtn.addEventListener("click", () => {
             applyTheme(state.theme === "dark" ? "light" : "dark");
@@ -362,9 +354,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // ==========================================
-    // MULTI-LANGUAGE TEMPLATES & UNIQUE QUESTION PARSER
-    // ==========================================
+   
     const languageTemplates = {
         English: {
             patterns: [
@@ -463,7 +453,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const lang = state.settings.language || "English";
         const langData = languageTemplates[lang] || languageTemplates["English"];
 
-        // Extract clean non-empty sentences
+        
         const rawSentences = sourceText.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 8);
         const topic = extractTopicTitle(sourceText);
 
