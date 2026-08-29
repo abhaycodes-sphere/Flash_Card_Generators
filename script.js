@@ -1,4 +1,11 @@
+/**
+ * FLASHCARD GENERATOR — FRONTEND APPLICATION LOGIC
+ */
 
+// Initialize PDF.js worker
+if (window['pdfjs-dist/build/pdf']) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     
@@ -19,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
         savedDecks: JSON.parse(localStorage.getItem("flashcard_decks") || "[]")
     };
 
-    
+   
     const screens = {
         create: document.getElementById("createScreen"),
         loading: document.getElementById("loadingScreen"),
@@ -37,24 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const themeToggleBtn = document.getElementById("themeToggle");
     const mobileMenuBtn = document.getElementById("mobileMenuBtn");
     const navLinks = document.getElementById("navLinks");
-
     const profileAvatarBtn = document.getElementById("profileAvatarBtn");
-    const authModal = document.getElementById("authModal");
-    const closeAuthModalBtn = document.getElementById("closeAuthModalBtn");
-
-    const authFormView = document.getElementById("authFormView");
-    const authProfileView = document.getElementById("authProfileView");
-
-    const tabLoginBtn = document.getElementById("tabLoginBtn");
-    const tabRegisterBtn = document.getElementById("tabRegisterBtn");
-    const loginForm = document.getElementById("loginForm");
-    const registerForm = document.getElementById("registerForm");
-
-    const profileNameDisplay = document.getElementById("profileNameDisplay");
-    const profileEmailDisplay = document.getElementById("profileEmailDisplay");
-    const profileAvatarLarge = document.getElementById("profileAvatarLarge");
-    const userDeckCount = document.getElementById("userDeckCount");
-    const logoutBtn = document.getElementById("logoutBtn");
 
     const notesInput = document.getElementById("notesInput");
     const clearTextBtn = document.getElementById("clearTextBtn");
@@ -88,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const nextCardBtn = document.getElementById("nextCardBtn");
     const backToCreateBtn = document.getElementById("backToCreateBtn");
     
-    
+
     const btnEasy = document.getElementById("btnEasy");
     const btnModerate = document.getElementById("btnModerate");
     const btnDifficult = document.getElementById("btnDifficult");
@@ -100,9 +90,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const clearDecksHeaderBtn = document.getElementById("clearDecksHeaderBtn");
     const decksGrid = document.getElementById("decksGrid");
 
+    
     function initApp() {
         applyTheme(state.theme);
-        updateUserUI();
         bindEvents();
         renderSavedDecks();
     }
@@ -114,32 +104,6 @@ document.addEventListener("DOMContentLoaded", () => {
         themeToggleBtn.innerHTML = theme === "dark" 
             ? '<i class="fa-solid fa-sun"></i>' 
             : '<i class="fa-solid fa-moon"></i>';
-    }
-
-    function updateUserUI() {
-        if (!profileAvatarBtn) return;
-        if (state.user) {
-            profileAvatarBtn.textContent = state.user.name.charAt(0).toUpperCase();
-            if (profileNameDisplay) profileNameDisplay.textContent = state.user.name;
-            if (profileEmailDisplay) profileEmailDisplay.textContent = state.user.email;
-            if (profileAvatarLarge) profileAvatarLarge.textContent = state.user.name.charAt(0).toUpperCase();
-            if (userDeckCount) userDeckCount.textContent = state.savedDecks.length;
-
-            if (authFormView) authFormView.classList.add("hidden");
-            if (authProfileView) authProfileView.classList.remove("hidden");
-        } else {
-            profileAvatarBtn.innerHTML = '<i class="fa-solid fa-user"></i>';
-            if (authFormView) authFormView.classList.remove("hidden");
-            if (authProfileView) authProfileView.classList.add("hidden");
-        }
-    }
-
-    function openModal() {
-        if (authModal) authModal.classList.add("active");
-    }
-
-    function closeModal() {
-        if (authModal) authModal.classList.remove("active");
     }
 
     function showScreen(targetScreenName) {
@@ -165,63 +129,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (mobileMenuBtn) {
             mobileMenuBtn.addEventListener("click", () => {
                 navLinks.classList.toggle("show");
-            });
-        }
-
-        if (profileAvatarBtn) profileAvatarBtn.addEventListener("click", openModal);
-        if (closeAuthModalBtn) closeAuthModalBtn.addEventListener("click", closeModal);
-        if (authModal) {
-            authModal.addEventListener("click", (e) => {
-                if (e.target === authModal) closeModal();
-            });
-        }
-
-        if (tabLoginBtn && tabRegisterBtn) {
-            tabLoginBtn.addEventListener("click", () => {
-                tabLoginBtn.classList.add("active");
-                tabRegisterBtn.classList.remove("active");
-                loginForm.classList.add("active");
-                registerForm.classList.remove("active");
-            });
-
-            tabRegisterBtn.addEventListener("click", () => {
-                tabRegisterBtn.classList.add("active");
-                tabLoginBtn.classList.remove("active");
-                registerForm.classList.add("active");
-                loginForm.classList.remove("active");
-            });
-        }
-
-        if (loginForm) {
-            loginForm.addEventListener("submit", (e) => {
-                e.preventDefault();
-                const email = document.getElementById("loginEmail").value;
-                const name = email.split("@")[0];
-                state.user = { name: name.charAt(0).toUpperCase() + name.slice(1), email: email };
-                localStorage.setItem("flashcard_user", JSON.stringify(state.user));
-                updateUserUI();
-                closeModal();
-            });
-        }
-
-        if (registerForm) {
-            registerForm.addEventListener("submit", (e) => {
-                e.preventDefault();
-                const name = document.getElementById("regName").value;
-                const email = document.getElementById("regEmail").value;
-                state.user = { name, email };
-                localStorage.setItem("flashcard_user", JSON.stringify(state.user));
-                updateUserUI();
-                closeModal();
-            });
-        }
-
-        if (logoutBtn) {
-            logoutBtn.addEventListener("click", () => {
-                state.user = null;
-                localStorage.removeItem("flashcard_user");
-                updateUserUI();
-                closeModal();
             });
         }
 
@@ -276,7 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (nextCardBtn) nextCardBtn.addEventListener("click", showNextCard);
         if (backToCreateBtn) backToCreateBtn.addEventListener("click", () => showScreen("create"));
 
-        // Rating Button Handlers
+        
         if (btnEasy) btnEasy.addEventListener("click", (e) => { e.stopPropagation(); rateCard("Easy"); });
         if (btnModerate) btnModerate.addEventListener("click", (e) => { e.stopPropagation(); rateCard("Moderate"); });
         if (btnDifficult) btnDifficult.addEventListener("click", (e) => { e.stopPropagation(); rateCard("Difficult"); });
@@ -332,21 +239,41 @@ document.addEventListener("DOMContentLoaded", () => {
         updateTextMetrics();
     }
 
-    function handleFileSelect() {
+    
+    async function handleFileSelect() {
         const file = fileInput.files[0];
-        if (file) {
-            fileBadge.textContent = `Selected: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
-            fileBadge.style.background = "var(--primary-light)";
-            fileBadge.style.color = "var(--primary)";
+        if (!file) return;
 
+        fileBadge.textContent = `Processing: ${file.name}...`;
+        fileBadge.style.background = "var(--primary-light)";
+        fileBadge.style.color = "var(--primary)";
+
+        if (file.type === "text/plain") {
             const reader = new FileReader();
             reader.onload = (e) => {
                 state.uploadedTextContent = e.target.result;
+                fileBadge.textContent = `Loaded: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
             };
-            if (file.type === "text/plain") {
-                reader.readAsText(file);
-            } else {
-                state.uploadedTextContent = `Extracted contents from ${file.name}`;
+            reader.readAsText(file);
+        } else if (file.type === "application/pdf" || file.name.endsWith(".pdf")) {
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                let fullText = "";
+
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const textContent = await page.getTextContent();
+                    const pageText = textContent.items.map(item => item.str).join(" ");
+                    fullText += pageText + " ";
+                }
+
+                state.uploadedTextContent = fullText.trim();
+                fileBadge.textContent = `Parsed ${pdf.numPages} Page(s): ${file.name}`;
+            } catch (error) {
+                console.error("Error parsing PDF:", error);
+                alert("Could not parse text from this PDF file. Please ensure it contains selectable text.");
+                fileBadge.textContent = "Error reading PDF file";
             }
         }
     }
@@ -450,7 +377,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const lang = state.settings.language || "English";
         const langData = languageTemplates[lang] || languageTemplates["English"];
 
-        
         const rawSentences = sourceText.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 8);
         const topic = extractTopicTitle(sourceText);
 
@@ -460,9 +386,7 @@ document.addEventListener("DOMContentLoaded", () => {
             let sentence = rawSentences[i % rawSentences.length] || `Core information point ${i + 1}`;
             let words = sentence.split(/\s+/).filter(w => w.length > 2);
             
-            
             let keyTerm = words.length > 0 ? words[Math.floor(words.length / 2)].replace(/[^a-zA-Z0-9]/g, "") : `Term ${i + 1}`;
-            
             
             const patternFn = langData.patterns[i % langData.patterns.length];
             
@@ -492,6 +416,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return words.replace(/[^a-zA-Z0-9 ]/g, "") + " Flashcards";
     }
 
+   
     function saveDeckToLocalStorage(title, cards) {
         const newDeck = {
             id: Date.now(),
@@ -505,7 +430,6 @@ document.addEventListener("DOMContentLoaded", () => {
         state.savedDecks.unshift(newDeck);
         localStorage.setItem("flashcard_decks", JSON.stringify(state.savedDecks));
         renderSavedDecks();
-        updateUserUI();
     }
 
     function clearAllSavedDecks() {
@@ -516,7 +440,6 @@ document.addEventListener("DOMContentLoaded", () => {
             localStorage.removeItem("flashcard_decks");
             navButtons.study.setAttribute("disabled", "true");
             renderSavedDecks();
-            updateUserUI();
             showScreen("create");
         }
     }
@@ -531,7 +454,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         
         renderSavedDecks();
-        updateUserUI();
     };
 
     window.loadDeck = function(deckId) {
