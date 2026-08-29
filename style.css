@@ -754,7 +754,7 @@ body {
     color: var(--text-secondary);
 }
 
-/* SRS Controls */
+
 .study-controls {
     max-width: 640px;
     margin: 0 auto;
@@ -1054,7 +1054,7 @@ kbd {
     display: none !important;
 }
 
-/* Profile Details View */
+
 .profile-header {
     text-align: center;
     margin-bottom: 1.5rem;
@@ -1101,7 +1101,7 @@ kbd {
     font-size: 0.875rem;
 }
 
-/* RESPONSIVE LAYOUTS */
+
 @media (max-width: 768px) {
     .hero-header h1 {
         font-size: 1.85rem;

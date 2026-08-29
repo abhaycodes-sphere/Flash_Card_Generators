@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const nextCardBtn = document.getElementById("nextCardBtn");
     const backToCreateBtn = document.getElementById("backToCreateBtn");
     
-    // Rating Buttons
+    
     const btnEasy = document.getElementById("btnEasy");
     const btnModerate = document.getElementById("btnModerate");
     const btnDifficult = document.getElementById("btnDifficult");
@@ -100,9 +100,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const clearDecksHeaderBtn = document.getElementById("clearDecksHeaderBtn");
     const decksGrid = document.getElementById("decksGrid");
 
-    // ==========================================
-    // INITIALIZATION & THEME
-    // ==========================================
     function initApp() {
         applyTheme(state.theme);
         updateUserUI();
@@ -463,10 +460,10 @@ document.addEventListener("DOMContentLoaded", () => {
             let sentence = rawSentences[i % rawSentences.length] || `Core information point ${i + 1}`;
             let words = sentence.split(/\s+/).filter(w => w.length > 2);
             
-            // Extract a key term dynamically from sentence
+            
             let keyTerm = words.length > 0 ? words[Math.floor(words.length / 2)].replace(/[^a-zA-Z0-9]/g, "") : `Term ${i + 1}`;
             
-            // Pick a rotating pattern function to avoid phrasing repetition
+            
             const patternFn = langData.patterns[i % langData.patterns.length];
             
             let question = patternFn(keyTerm, sentence);
@@ -570,9 +567,7 @@ document.addEventListener("DOMContentLoaded", () => {
         `).join("");
     }
 
-    // ==========================================
-    // CARD RENDER & 3-BUTTON DIFFICULTY SYSTEM
-    // ==========================================
+    
     function rateCard(ratingLevel) {
         if (state.currentDeck[state.currentIndex]) {
             state.currentDeck[state.currentIndex].userRating = ratingLevel;
